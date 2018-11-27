@@ -1,0 +1,25 @@
+{
+  "name": "renting",
+  "version": "1.0.0",
+  "description": "",
+  "author": "lhg",
+  "license": "MIT",
+  "main": "dist/main.js",
+  "dependencies": {
+    "electron": "^4.0.0-nightly.20181010",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
+  },
+  "devDependencies": {
+    "@types/react": "^16.7.7",
+    "@types/react-dom": "^16.0.10",
+    "concurrently": "^4.1.0",
+    "typescript": "^3.1.6"
+  },
+  "scripts": {
+    "dev": "concurrently --kill-others \"npm run ts-watch\" \"npm run electron-debug\"",
+    "ts-watch": "tsc --watch",
+    "electron": "electron .",
+    "electron-debug": "electron . --debug"
+  }
+}
