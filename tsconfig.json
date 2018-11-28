@@ -8,6 +8,8 @@
       "removeComments": true,
       "preserveConstEnums": true,
       "sourceMap": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
       "jsx": "preserve",
   }
 }

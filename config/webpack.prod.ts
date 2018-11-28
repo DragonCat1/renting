@@ -1,4 +1,4 @@
-import * as webpackMerge from 'webpack-merge';
+import webpackMerge from 'webpack-merge';
 import webpackCommon from './webpack.common';
 
 const prodConf = webpackMerge(webpackCommon, {
