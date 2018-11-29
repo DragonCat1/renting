@@ -3,7 +3,9 @@ import { Configuration } from 'webpack'
 import htmlWebpackPlugin from 'html-webpack-plugin'
 
 const config: Configuration = {
-  entry: path.resolve(__dirname, '../src/app.tsx'),
+  entry: {
+    app:path.resolve(__dirname, '../src/app.tsx'),
+  },
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename:'app.[hash].js',

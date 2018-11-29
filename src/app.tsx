@@ -3,6 +3,6 @@ import { render } from 'react-dom'
 
 render(
   <div>
-    hello worldg
+    hello world
   </div>,
   document.getElementById('app'))
