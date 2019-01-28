@@ -1,5 +1,6 @@
 <template>
   <div class="view-me">
+    <el-button>123</el-button>
     {{me}}
   </div>
 </template>
