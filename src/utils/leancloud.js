@@ -36,8 +36,8 @@ async function reg({username,password}) {
 //登陆 28i85ifaiayy7jw3apg3m67ex 123456
 async function login(username, password) {
   const loggedInUser = await User.logIn(username, password)
-  Vue.set(Store.state,'me',loggedInUser.attributes)
-  Vue.set(Store.state.me,'id',loggedInUser.id)
+  Store.commit('m_set_me',loggedInUser.attributes)
+  Store.commit('m_set_me',{id:loggedInUser.id})
   return loggedInUser
 }
 

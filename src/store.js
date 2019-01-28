@@ -10,10 +10,14 @@ export default new Vuex.Store({
     me:{}
   },
   mutations: {
-
+    'm_set_me'(state,payload) {
+      Vue.set(state,'me',{...state.me,...payload})
+    }
   },
   actions: {
 
   },
-  plugins: [createPersistedState()]
+  plugins: [createPersistedState({
+    key:'store'
+  })]
 })
