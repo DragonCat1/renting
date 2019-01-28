@@ -38,12 +38,16 @@ async function login(username, password) {
   const loggedInUser = await User.logIn(username, password)
   Store.commit('m_set_me',loggedInUser.attributes)
   Store.commit('m_set_me',{id:loggedInUser.id})
+  Store.commit('m_set_login',true)
   return loggedInUser
 }
 
 //注销
 function logout() {
   User.logOut()
+  if(!User.current()){
+    Store.commit('m_set_login',false)
+  }
   return !User.current()
 }
 
@@ -183,10 +187,22 @@ async function house(payload){
   return await Cloud.run('listHouse',payload)
 }
 
+async function main(){
+  init()
+  const currentUser = User.current()
+  const authenticated =  currentUser && await currentUser.isAuthenticated()
+  if(authenticated){
+    Store.commit('m_set_login',true)
+  }
+  else{
+    Store.commit('m_set_login',false)
+  }
+}
+main()
 
 async function test(){
-  init()
-  await login('28i85ifaiayy7jw3apg3m67ex','123456')
+  // await login('28i85ifaiayy7jw3apg3m67ex','123456')
+  
 }
 test()
 

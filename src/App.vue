@@ -4,19 +4,34 @@
       <div class="nav-inner">
         <router-link to="/home">首页</router-link>
         <router-link to="/me">我</router-link>
+        <UserStatus/>
       </div>
     </div>
     <div class="main-content">
       <router-view/>
     </div>
+    <ImageViewer/>
   </div>
 </template>
+
+<script>
+import UserStatus from './components/UserStatus'
+import ImageViewer from './components/ImageViewer'
+
+export default {
+  components:{
+    UserStatus,
+    ImageViewer
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .nav {
   height: 80px;
   background: #2b2b2b;
   &-inner {
+    position: relative;
     width: 1000px;
     align-items: center;
     display: flex;

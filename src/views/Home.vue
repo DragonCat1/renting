@@ -8,7 +8,6 @@
 import '@/utils/leancloud'
 
 export default {
-  name: 'home',
   components: {
   }
 }
