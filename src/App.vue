@@ -2,8 +2,8 @@
   <div id="app">
     <div class="nav">
       <div class="nav-inner">
-        <router-link to="/home">首页</router-link>
-        <router-link to="/me">我</router-link>
+        <Icon name="house" color="#fff" size="50px" style="margin-right:35px;"/>
+        <router-link v-for="el in routes" :key="el.path" v-if="el.name" :to="el.path">{{el.name}}</router-link>
         <UserStatus/>
       </div>
     </div>
@@ -17,16 +17,22 @@
 <script>
 import UserStatus from './components/UserStatus'
 import ImageViewer from './components/ImageViewer'
+import {routes} from './router.js'
 
 export default {
   components:{
     UserStatus,
     ImageViewer
+  },
+  data(){
+    return {
+      routes:routes
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .nav {
   height: 80px;
   background: #2b2b2b;
@@ -37,9 +43,10 @@ export default {
     display: flex;
     margin: auto;
     height: 100%;
-    a {
+    text-transform: uppercase;
+    a,.el-button--text {
       &:not(:last-child){
-        margin-right: 20px;
+        margin-right: 35px;
       }
       font-size: 20px;
       transition: all 0.3s;
@@ -48,7 +55,7 @@ export default {
         color:#fff;
       }
       &:hover{
-        color:darken($color:#fff, $amount: 40%);
+        color:rgb(60, 194, 105);
       }
     }
   }

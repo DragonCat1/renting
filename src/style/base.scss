@@ -1,5 +1,13 @@
 @import '~normalize.css';
 
+$base-color:#666;
+$light-color:#999;
+$dark-color:#333;
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
 
 a {
   color: initial;
@@ -7,4 +15,23 @@ a {
 
 a:link {
   text-decoration: none;
+}
+
+@for $i from 1 through 6 {
+  h#{$i} {
+    color: #333;
+  }
+}
+
+div,
+p {
+  color: #666;
+}
+
+.text-light {
+  color: $light-color;
+}
+
+.text-dark {
+  color: $dark-color;
 }

@@ -3,11 +3,13 @@ import App from './App.vue'
 import element from 'element-ui'
 import router from './router'
 import store from './store'
+import Icon from './components/Icon.vue'
 import 'element-ui/lib/theme-chalk/index.css'
 import './style/index.scss'
 
 Vue.config.productionTip = false
 Vue.use(element)
+Vue.component('Icon',Icon)
 
 new Vue({
   router,

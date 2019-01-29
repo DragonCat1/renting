@@ -1,0 +1,17 @@
+@import 'mixin.scss';
+
+.flex {
+  @include flex();
+}
+
+.flex-center {
+  @include flex(null, center, null);
+}
+
+.flex-center2 {
+  @include flex(null, center, center);
+}
+
+.flex-column {
+  @include flex(column, null, null);
+}

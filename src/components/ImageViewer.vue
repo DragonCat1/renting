@@ -47,14 +47,14 @@ export default {
   },
   methods:{
     handleKey(e){
-      e.charCode===32 && this.closeImage()
+      e.key==='Escape' && this.closeImage()
     }
   },
   mounted(){
-    window.addEventListener('keypress',this.handleKey)
+    window.addEventListener('keyup',this.handleKey)
   },
   beforeDestroy(){
-    window.removeEventListener('keypress',this.handleKey)
+    window.removeEventListener('keyup',this.handleKey)
   }
 }
 </script>
