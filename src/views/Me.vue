@@ -10,7 +10,7 @@
     </div>
     <div v-else class="flex-center2 flex-column no-login text-light">
       <Icon name='empty' size="128px"/>
-      未登录
+      /* 未登录 */
     </div>
   </div>
 </template>
