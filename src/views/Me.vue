@@ -5,10 +5,22 @@
         <el-form-item v-for="(value,key,index) in form" :key="index" :label="key">
           <el-input v-model="form[key]" v-if="typeof value === 'string'"/>
           <div v-if="typeof value === 'boolean'">
-            <el-radio :name="key">是</el-radio>
-            <el-radio :name="key">否</el-radio>
+            <el-radio v-model="form[key]" :label="true">是</el-radio>
+            <el-radio v-model="form[key]" :label="false">否</el-radio>
           </div>
-          {{value}}{{typeof value}}
+          <div v-if="Array.isArray(value)">
+            <el-tag
+              v-for="(item,index) in value"
+              :key="index"
+              closable
+              @close="form[key]=form[key].filter(el=>el!==item)"
+              >
+              {{item}}
+            </el-tag>
+            <input type="text" class="el-input__inner" @keypress.enter="e=>{form[key].push(e.target.value);e.target.value=''}">
+          </div>
+          <el-input-number v-if="typeof value === 'number'" v-model="form[key]"/>
+          <el-button v-if="!isEqual(form[key],me[key])" type="primary" @click="save">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -21,12 +33,15 @@
 
 <script>
 import {mapState} from 'vuex'
+import {editMe} from '../utils/leancloud'
 import cloneDeep from 'lodash/cloneDeep'
+import isEqual from 'lodash/isEqual'
 
 export default {
   data(){
     return {
-      form:{}
+      form:{},
+      isEqual
     }
   },
   watch:{
@@ -44,6 +59,11 @@ export default {
       me:state=>state.me,
     })
   },
+  methods:{
+    save(){
+      editMe(this.form)
+    }
+  }
 }
 </script>
 

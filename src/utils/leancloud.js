@@ -56,7 +56,13 @@ function editMe(payload){
     Object.keys(payload).forEach(el=>{
       me.set(el, payload[el])
     })
-    me.save()
+    if(me.save()){
+      me = User.current()
+      Store.commit('m_set_me',me.attributes)
+      Store.commit('m_set_me',{id:me.id})
+      return me
+    }
+    return false
 }
 
 // 默认
@@ -193,6 +199,8 @@ async function main(){
   const authenticated =  currentUser && await currentUser.isAuthenticated()
   if(authenticated){
     Store.commit('m_set_login',true)
+    Store.commit('m_set_me',currentUser.attributes)
+    Store.commit('m_set_me',{id:currentUser.id})
   }
   else{
     Store.commit('m_set_login',false)
