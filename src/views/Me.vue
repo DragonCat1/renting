@@ -4,7 +4,11 @@
       <el-form :model="form">
         <el-form-item v-for="(value,key,index) in form" :key="index" :label="key">
           <el-input v-model="form[key]" v-if="typeof value === 'string'"/>
-          {{value}}{{typeof value}}{{Array.isArray(value)}}
+          <div v-if="typeof value === 'boolean'">
+            <el-radio :name="key">是</el-radio>
+            <el-radio :name="key">否</el-radio>
+          </div>
+          {{value}}{{typeof value}}
         </el-form-item>
       </el-form>
     </div>
