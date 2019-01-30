@@ -1,6 +1,6 @@
 <template>
   <div class="comp-filters">
-    <el-form inline size="mini" :model="searchForm">
+    <el-form inline size="mini" :model="searchForm" label-width="4em">
       <form-item
         v-for="item in option"
         :key="item.key"
@@ -43,7 +43,7 @@ Vue.component('form-item', {
         },
         on: {
           change: onChange,
-          input: (e => {eval(`model.${item.key}=e`)}).bind(this)
+          input: e => {eval(`model.${item.key}=e`)}
         }
       },
       [...optionEles]
