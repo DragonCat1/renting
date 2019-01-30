@@ -55,12 +55,12 @@ export default {
         color:#fff;
       }
       &:hover{
-        color:rgb(60, 194, 105);
+        color:#3cc269;
       }
     }
   }
 }
 .main-content{
-  padding:10px;
+  background: #f5f5f5;
 }
 </style>

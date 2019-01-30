@@ -189,8 +189,15 @@ async function editMe(payload){
 // }
 //"orderSelected": "cheap"  "orderSelected": "new"  "orderSelected": "near"
 
-async function house(payload){
-  return await Cloud.run('listHouse',payload)
+async function listHouse(payload=Store.state.searchForm){
+  try{
+    const result = await Cloud.run('listHouse',payload)
+    Store.commit('m_set_houses',result,true)
+    return result
+  }
+  catch(e){
+    throw e
+  }
 }
 
 async function main(){
@@ -219,5 +226,5 @@ export {
   login,
   logout,
   editMe,
-  house
+  listHouse
 }

@@ -67,12 +67,26 @@ export default {
   top:0;
   left: 0;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 10;
+  z-index: 10000;
+  .swiper-container{
+    overflow:visible;
+  }
   .swiper-slide{
     height: calc(100vh - 100px);
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: grab;
+    &:hover{
+      background: rgba(0, 0, 0, 0.1);
+    }
+    img{
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+  .swiper-pagination{
+    bottom:-100px;
   }
 }
 </style>

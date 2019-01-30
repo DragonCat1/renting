@@ -1,12 +1,12 @@
 <template>
   <div class="comp-user-status">
     <div v-if="isLogin">
-      <img :src="me.wechatAvatarUrl" @click="showImage([me.wechatAvatarUrl])">
+      <img :src="me.wechatAvatarUrl" v-preview>
       <span>{{me.wechatNickName}}</span>
-      <el-button type="text" @click="logout">注销</el-button>
+      <el-button type="text" @click="logout">LOGOUT</el-button>
     </div>
     <div v-else>
-      <el-button type="text" @click="loginVisible = true">登陆</el-button>
+      <el-button type="text" @click="loginVisible = true">LOGIN</el-button>
     </div>
     <el-dialog
       title="登陆"
@@ -30,12 +30,10 @@
 
 <script>
 import {mapState} from 'vuex'
-import mixImageViewer from '../mixins/imageViewer'
-import 'swiper/dist/css/swiper.min.css'
 import {login,logout} from '../utils/leancloud'
+import 'swiper/dist/css/swiper.min.css'
   
 export default {
-  mixins:[mixImageViewer],
   data(){
     return {
       loginVisible:false,
@@ -76,10 +74,9 @@ export default {
       margin-right:16px;
     }
     img{
-      width: 60px;
-      height: 60px;
+      width: 58px;
+      height: 58px;
       border-radius: 60px;
-      cursor: pointer;
     }
   }
 }

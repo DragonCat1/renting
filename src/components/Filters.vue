@@ -1,6 +1,6 @@
 <template>
   <div class="comp-filters">
-    <el-form inline size="mini" :model="searchForm" label-width="4em">
+    <el-form inline size="mini" :model="searchForm" label-width="4em" v-loading="loading" :disabled="!isLogin">
       <form-item
         v-for="item in option"
         :key="item.key"
@@ -15,6 +15,7 @@
 <script>
 import Vue from 'vue'
 import {mapState} from 'vuex'
+import {listHouse} from '@/utils/leancloud'
 
 
 Vue.component('form-item', {
@@ -61,6 +62,7 @@ Vue.component('form-item', {
 export default {
   data(){
     return{
+      loading:false,
       option:[
         {
           label:'关键字',
@@ -115,6 +117,11 @@ export default {
           ]
         },
         {
+          label:'距离',
+          type:'number',
+          key:'queryCond.nearbySelected'
+        },
+        {
           label:'页数',
           type:'number',
           key:'pageNumber',
@@ -124,16 +131,22 @@ export default {
   },
   computed:{
     ...mapState({
-      searchForm: state => state.searchForm
+      searchForm: state => state.searchForm,
+      isLogin:state=>state.isLogin,
     })
   },
   methods:{
-    onChange(){
-      
+    async onChange(){
+      this.loading = true
+      await listHouse()
+      this.loading = false
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.el-form{
+  padding-top:18px;
+}
 </style>

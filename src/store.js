@@ -27,6 +27,7 @@ export default new Vuex.Store({
       show:false,
       imgs:[]
     },
+    houses:[]
   },
   mutations: {
     'm_set_me'(state,payload) {
@@ -37,6 +38,12 @@ export default new Vuex.Store({
     },
     'm_set_image'(state,payload){
       state.image = {...state.image,...payload}
+    },
+    'm_set_houses'(state,payload){
+      state.houses=payload
+    },
+    'm_append_houses'(state,payload){
+      state.houses.push(...payload)
     }
   },
   actions: {
