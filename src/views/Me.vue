@@ -20,7 +20,7 @@
             <input type="text" class="el-input__inner" @keypress.enter="e=>{form[key].push(e.target.value);e.target.value=''}">
           </div>
           <el-input-number v-if="typeof value === 'number'" v-model="form[key]"/>
-          <el-button v-if="!isEqual(form[key],me[key])" type="primary" @click="save">保存</el-button>
+          <el-button v-if="!isEqual(form[key],me[key])" type="primary" @click="save({[key]:form[key]})" :loading="saveing">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -40,6 +40,7 @@ import isEqual from 'lodash/isEqual'
 export default {
   data(){
     return {
+      saveing:false,
       form:{},
       isEqual
     }
@@ -60,8 +61,10 @@ export default {
     })
   },
   methods:{
-    save(){
-      editMe(this.form)
+    async save(payload){
+      this.saveing = true
+      await editMe(payload)
+      this.saveing = false
     }
   }
 }

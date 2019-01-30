@@ -1,18 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import House from './views/House.vue'
 import Me from './views/Me.vue'
 
 Vue.use(Router)
 export const routes =  [
   {
     path: '/',
-    redirect:'/home'
+    redirect:'/house'
   },
   {
-    path: '/home',
-    name: 'home',
-    component: Home,
+    path: '/house',
+    name: 'house',
+    component: House,
   },
   {
     path: '/me',

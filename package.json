@@ -5,7 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "watch": "vue-cli-service build --watch",
+    "lint": "vue-cli-service lint",
+    "electron": "electron ./electron",
+    "start":"npm run watch & npm run electron"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -28,7 +31,10 @@
     "electron": "^4.0.2",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
     "node-sass": "^4.11.0",
+    "nodemon": "^1.18.9",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.21"
   },

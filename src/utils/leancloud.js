@@ -36,8 +36,7 @@ async function reg({username,password}) {
 //登陆 28i85ifaiayy7jw3apg3m67ex 123456
 async function login(username, password) {
   const loggedInUser = await User.logIn(username, password)
-  Store.commit('m_set_me',loggedInUser.attributes)
-  Store.commit('m_set_me',{id:loggedInUser.id})
+  Store.commit('m_set_me',{...loggedInUser.attributes,id:loggedInUser.id})
   Store.commit('m_set_login',true)
   return loggedInUser
 }
@@ -51,18 +50,19 @@ function logout() {
   return !User.current()
 }
 
-function editMe(payload){
+async function editMe(payload){
     let me = User.current()
     Object.keys(payload).forEach(el=>{
       me.set(el, payload[el])
     })
-    if(me.save()){
-      me = User.current()
-      Store.commit('m_set_me',me.attributes)
-      Store.commit('m_set_me',{id:me.id})
-      return me
+    try {
+      const newMe = await me.save()
+      Store.commit('m_set_me',{...newMe.attributes,id:newMe.id})
+      return newMe
     }
-    return false
+    catch(e) {
+      throw e
+    }
 }
 
 // 默认
@@ -199,8 +199,7 @@ async function main(){
   const authenticated =  currentUser && await currentUser.isAuthenticated()
   if(authenticated){
     Store.commit('m_set_login',true)
-    Store.commit('m_set_me',currentUser.attributes)
-    Store.commit('m_set_me',{id:currentUser.id})
+    Store.commit('m_set_me',{...currentUser.attributes,id:currentUser.id})
   }
   else{
     Store.commit('m_set_login',false)
@@ -209,7 +208,7 @@ async function main(){
 main()
 
 async function test(){
-  // await login('28i85ifaiayy7jw3apg3m67ex','123456')
+  
   
 }
 test()

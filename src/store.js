@@ -9,6 +9,20 @@ export default new Vuex.Store({
   state: {
     isLogin:false,
     me:{},
+    searchForm:{
+      currCity:'杭州市',
+      currLoc:'', //当前位置
+      pageNumber:1,
+      filterType:'', //找房：house 找人：roomy
+      keyword:'',
+      queryCond:{
+        filterSelected:'default',
+        location:'',  //当前位置
+        nearbySelected:1, //附近距离
+        genderSelected:'all',
+        orderSelected:''
+      }
+    },
     image:{
       show:false,
       imgs:[]

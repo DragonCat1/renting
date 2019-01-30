@@ -2,7 +2,7 @@
   <div id="app">
     <div class="nav">
       <div class="nav-inner">
-        <Icon name="house" color="#fff" size="50px" style="margin-right:35px;"/>
+        <i class="iconfont ic-house" style="margin-right:35px;color:#fff;font-size:35px;"/>
         <router-link v-for="el in routes" :key="el.path" v-if="el.name" :to="el.path">{{el.name}}</router-link>
         <UserStatus/>
       </div>
