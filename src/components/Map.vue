@@ -14,7 +14,7 @@
         draging:false,
         startY:0,
         map:null,
-        height:400,
+        height:350,
         srcHeight:0
       }
     },
@@ -81,6 +81,7 @@
 .map-wrap{
   background: #2b2b2b;
   overflow: hidden;
+  padding:8px 0;
 }
 .map{
   box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.5);
@@ -91,7 +92,7 @@
 }
 .map-drager{
   height:5px;
-  cursor: n-resize;
+  cursor: ns-resize;
   background: #b8f3a5;
   &:hover{
     background:darken($color: #b8f3a5, $amount: 10%);

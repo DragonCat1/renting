@@ -15,6 +15,18 @@ export const routes =  [
     component: House,
   },
   {
+    path: '/like',
+    name: 'like'
+  },
+  {
+    path: '/block',
+    name: 'block'
+  },
+  {
+    path: '/black list',
+    name: 'blackList'
+  },
+  {
     path: '/me',
     name: 'me',
     component: Me

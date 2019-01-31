@@ -15,3 +15,15 @@
 .flex-column {
   @include flex(column, null, null);
 }
+
+.flex-between {
+  @include flex(null, space-between, null);
+}
+
+.flex-column-right {
+  @include flex(column, null, flex-end);
+}
+
+.flex-grow {
+  flex: 1 0;
+}

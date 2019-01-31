@@ -1,6 +1,6 @@
 <template>
   <div class="comp-filters">
-    <el-form inline size="mini" :model="searchForm" label-width="4em" v-loading="loading" :disabled="!isLogin">
+    <el-form inline size="mini" :model="searchForm" label-width="5em" v-loading="loading" :disabled="!isLogin">
       <form-item
         v-for="item in option"
         :key="item.key"
@@ -115,6 +115,11 @@ export default {
             {label:'时间',value:'new'},
             {label:'距离',value:'near'}
           ]
+        },
+        {
+          label:'坐标',
+          type:'string',
+          key:'currLoc'
         },
         {
           label:'距离',

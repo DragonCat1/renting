@@ -3,10 +3,10 @@
     <div v-if="isLogin">
       <img :src="me.wechatAvatarUrl" v-preview>
       <span>{{me.wechatNickName}}</span>
-      <el-button type="text" @click="logout">LOGOUT</el-button>
+      <el-button type="text" @click="logout">Logout</el-button>
     </div>
     <div v-else>
-      <el-button type="text" @click="loginVisible = true">LOGIN</el-button>
+      <el-button type="text" @click="loginVisible = true">Login</el-button>
     </div>
     <el-dialog
       title="登陆"
@@ -74,9 +74,10 @@ export default {
       margin-right:16px;
     }
     img{
-      width: 58px;
-      height: 58px;
-      border-radius: 60px;
+      $size:35px;
+      width: $size;
+      height: $size;
+      border-radius: $size;
     }
   }
 }

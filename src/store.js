@@ -44,7 +44,11 @@ export default new Vuex.Store({
     },
     'm_append_houses'(state,payload){
       state.houses.push(...payload)
-    }
+    },
+    'm_set_location'(state,payload){
+      state.searchForm.currLoc = payload
+      state.searchForm.queryCond.location = payload
+    },
   },
   actions: {
 

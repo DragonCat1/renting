@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import AV from 'leancloud-storage'
 // import { Realtime, TextMessage } from 'leancloud-realtime'
-import Store from '../store'
+import store from '../store'
 import config from '../config/leancloud'
 
 const {Query,User,Cloud} = AV
@@ -36,8 +36,8 @@ async function reg({username,password}) {
 //登陆 28i85ifaiayy7jw3apg3m67ex 123456
 async function login(username, password) {
   const loggedInUser = await User.logIn(username, password)
-  Store.commit('m_set_me',{...loggedInUser.attributes,id:loggedInUser.id})
-  Store.commit('m_set_login',true)
+  store.commit('m_set_me',{...loggedInUser.attributes,id:loggedInUser.id})
+  store.commit('m_set_login',true)
   return loggedInUser
 }
 
@@ -45,7 +45,7 @@ async function login(username, password) {
 function logout() {
   User.logOut()
   if(!User.current()){
-    Store.commit('m_set_login',false)
+    store.commit('m_set_login',false)
   }
   return !User.current()
 }
@@ -57,7 +57,7 @@ async function editMe(payload){
     })
     try {
       const newMe = await me.save()
-      Store.commit('m_set_me',{...newMe.attributes,id:newMe.id})
+      store.commit('m_set_me',{...newMe.attributes,id:newMe.id})
       return newMe
     }
     catch(e) {
@@ -189,10 +189,10 @@ async function editMe(payload){
 // }
 //"orderSelected": "cheap"  "orderSelected": "new"  "orderSelected": "near"
 
-async function listHouse(payload=Store.state.searchForm){
+async function listHouse(payload=store.state.searchForm){
   try{
     const result = await Cloud.run('listHouse',payload)
-    Store.commit('m_set_houses',result,true)
+    store.commit('m_set_houses',result,true)
     return result
   }
   catch(e){
@@ -205,11 +205,11 @@ async function main(){
   const currentUser = User.current()
   const authenticated =  currentUser && await currentUser.isAuthenticated()
   if(authenticated){
-    Store.commit('m_set_login',true)
-    Store.commit('m_set_me',{...currentUser.attributes,id:currentUser.id})
+    store.commit('m_set_login',true)
+    store.commit('m_set_me',{...currentUser.attributes,id:currentUser.id})
   }
   else{
-    Store.commit('m_set_login',false)
+    store.commit('m_set_login',false)
   }
 }
 main()
