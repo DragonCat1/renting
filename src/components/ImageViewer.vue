@@ -107,7 +107,7 @@ export default {
       this.closeTimer = setTimeout(() => {
         this.closeImage()
         this.closeTimer = null
-      }, 300)
+      }, 250)
     }
   },
   mounted(){
