@@ -1,10 +1,10 @@
 <template>
-  <div class="comp-house-item">
+  <div class="comp-house-item" @click="itemClick">
     <div class="item-top flex-between">
       <img :src="data.userAvatarUrl" v-preview>
       <div class="flex-grow">
         <p class="flex-between">
-          <span>{{data.userNickName}} <span class="emjoy">{{data.gender==='男'?'&#x1F466;&#x1F3FB;':'&#x1F467;&#x1F3FB;'}}</span></span>
+          <span><span class="nickname">{{data.userNickName}}</span><span class="emjoy">{{data.gender==='男'?'&#x1F466;&#x1F3FB;':'&#x1F467;&#x1F3FB;'}}</span></span>
           <span class="price">¥{{data.price}}</span>
         </p>
         <p class="flex-between">
@@ -17,11 +17,7 @@
       <span class="type-tag">{{data.houseType | houseType}}</span>
       {{data.title}}
     </div>
-    <div class="images flex">
-      <div class="images--wrap" v-for="image in data.images" :key="image">
-        <img :src="image">
-      </div>
-    </div>
+    <ImageSlider :images="data.images"/>
     <div class="footer flex-between">
       <span class="location"><i class="iconfont ic-location"/>{{data.location.name}}</span>
       <span class="area">{{data.district}}-{{data.township}}</span>
@@ -30,6 +26,7 @@
 </template>
 
 <script>
+import ImageSlider from './ImageSlider'
 const houseTypeMap = {
   sublet:'转租',
   entire:'整租',
@@ -38,10 +35,18 @@ const houseTypeMap = {
   rentPart:'求合租',
 }
 export default {
+  components:{
+    ImageSlider
+  },
   props:['data'],
   filters:{
     houseType(value){
       return houseTypeMap[value]
+    }
+  },
+  methods:{
+    itemClick(e){
+      console.log(e)
     }
   }
 }
@@ -54,9 +59,15 @@ $color-light:#89c1c0;
   flex: 1 0;
   min-height: 200px;
   overflow: hidden;
-  box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.09);
   padding: 8px;
   border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover{
+    box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.09);
+    transform: scale(1.01);
+  }
   &:not(:last-child),
   &:not(:nth-child(5n)) {
     margin-right: 16px;
@@ -69,7 +80,13 @@ $color-light:#89c1c0;
     margin: 0;
     line-height: 20px;
   }
-
+  .nickname{
+    text-overflow: ellipsis;
+    max-width: 10em;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: text-bottom;
+  }
   img {
     $size: 40px;
     max-width: $size;
@@ -79,6 +96,7 @@ $color-light:#89c1c0;
   }
   .emjoy {
     font-size: 16px;
+    margin-left: 0.5em;
   }
 
   .price {
@@ -104,33 +122,7 @@ $color-light:#89c1c0;
     border-radius: 4px;
   }
 }
-.images {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 2px;
-  height:102px;
-  &::-webkit-scrollbar {
-    height: 2px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: $color-light;
-  }
-  &--wrap {
-    $size: 100px;
-    width: $size;
-    height: $size;
-    flex: 1 0 $size;
-    background: #000;
-    &:not(:last-child) {
-      margin-right: 8px;
-    }
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-  }
-}
+
 .footer{
   font-size: 12px;
   margin-top: 8px;

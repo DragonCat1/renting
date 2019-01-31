@@ -7,6 +7,7 @@ import Icon from './components/Icon.vue'
 import preview from './plugins/preview'
 import moment from 'moment'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'swiper/dist/css/swiper.min.css'
 import './style/index.scss'
 
 
@@ -30,6 +31,6 @@ new Vue({
 }).$mount('#app')
 
 navigator.geolocation.getCurrentPosition(e => {
-  const {coords} = e
-  store.commit('m_set_location',`${coords.longitude.toFixed(6)},${coords.latitude.toFixed(6)}`)
+  const {coords:{longitude,latitude}} = e
+  store.commit('m_set_location',`${longitude.toFixed(6)},${latitude.toFixed(6)}`)
 })

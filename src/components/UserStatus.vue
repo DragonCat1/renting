@@ -31,7 +31,7 @@
 <script>
 import {mapState} from 'vuex'
 import {login,logout} from '../utils/leancloud'
-import 'swiper/dist/css/swiper.min.css'
+
   
 export default {
   data(){
