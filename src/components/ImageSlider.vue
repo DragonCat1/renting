@@ -3,7 +3,7 @@
     <swiper :options="swiperOption">
       <swiperSlide v-for="(image,index) in images" :key="image">
         <div class="image-wrap">
-          <img :src="image" v-preview="{images,index}">
+          <Img :src="image" :size="size" v-preview="{images,index}"/>
         </div>
       </swiperSlide>
       <div class="swiper-scrollbar" slot="scrollbar"></div>
@@ -13,12 +13,16 @@
 
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-
+import Img from '../components/Img'
 export default {
-  props:['images'],
+  props:{
+    images:Array,
+    size:{type:Number,default:100}
+  },
   components:{
     swiper,
-    swiperSlide
+    swiperSlide,
+    Img
   },
   data(){
     return {

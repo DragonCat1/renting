@@ -5,12 +5,12 @@ const preview = {
       bind(el,binding){
         const {value={}} = binding
         const {images,index} = value
-        let src = el.src
-        if(src.match(/wx\.qlogo\.cn/)){
-          src = src.replace(/\/\d+$/,'/0')
-        }
         el.addEventListener('click',function(e){
           e.stopPropagation()
+          let src = e.target.src
+          if(src.match(/wx\.qlogo\.cn/)){
+            src = src.replace(/\/\d+$/,'/0')
+          }
           Store.commit('m_set_image',{
             show:true,
             imgs:images || [src],

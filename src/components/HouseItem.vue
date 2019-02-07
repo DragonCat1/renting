@@ -1,32 +1,51 @@
 <template>
-  <div class="comp-house-item" @click="itemClick">
-    <div class="item-top flex-between">
-      <img :src="data.userAvatarUrl" v-preview>
-      <div class="flex-grow">
-        <p class="flex-between">
-          <span><span class="nickname">{{data.userNickName}}</span><span class="emjoy">{{data.gender==='男'?'&#x1F466;&#x1F3FB;':'&#x1F467;&#x1F3FB;'}}</span></span>
-          <span class="price">¥{{data.price}}</span>
-        </p>
-        <p class="flex-between">
-          <span>{{data.refreshedAt | fromNow}}更新</span>
-          <span>{{data.createdAt | format}}</span>
-        </p>
+  <div class="comp-house-item">
+    <div class="house-item-box" @click="itemClick">
+      <div class="item-top flex-between">
+        <img :src="data.userAvatarUrl" v-preview>
+        <div class="flex-grow">
+          <p class="flex-between">
+            <span><span class="nickname">{{data.userNickName}}</span><span class="emjoy">{{data.gender==='男'?'&#x1F466;&#x1F3FB;':'&#x1F467;&#x1F3FB;'}}</span></span>
+            <span class="price">¥{{data.price}}</span>
+          </p>
+          <p class="flex-between">
+            <span>{{data.refreshedAt | fromNow}}更新</span>
+            <span>{{data.createdAt | format}}</span>
+          </p>
+        </div>
+      </div>
+      <div class="title">
+        <span class="type-tag">{{data.houseType | houseType}}</span>
+        {{data.title}}
+      </div>
+      <ImageSlider :images="data.images" :size="100" />
+      <div class="footer flex-between">
+        <span class="location"><i class="iconfont ic-location"/>{{data.location.name}}</span>
+        <span class="area">{{data.district}}-{{data.township}}</span>
       </div>
     </div>
-    <div class="title">
-      <span class="type-tag">{{data.houseType | houseType}}</span>
-      {{data.title}}
-    </div>
-    <ImageSlider :images="data.images"/>
-    <div class="footer flex-between">
-      <span class="location"><i class="iconfont ic-location"/>{{data.location.name}}</span>
-      <span class="area">{{data.district}}-{{data.township}}</span>
-    </div>
+    <el-dialog
+      :visible.sync="detialShow"
+      width="600px">
+      <HouseDetial :oid="data.objectId"/>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="detialShow = false">关闭</el-button>
+      </span>
+      <div slot="title">
+        <span class="house-opt">
+          <a @click="addBlock({id:data.objectId,title:data.title,images:data.images})"><i class="iconfont ic-block"/></a>
+          <a @click="addBlackList({id:data.avUserId,avatar:data.userAvatarUrl,nickname:data.userNickName})"><i class="iconfont ic-black"/></a>
+        </span>
+        <span class="type-tag">{{data.houseType | houseType}}</span>{{data.title}}</div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 import ImageSlider from './ImageSlider'
+import HouseDetial from './HouseDetial'
+
 const houseTypeMap = {
   sublet:'转租',
   entire:'整租',
@@ -35,8 +54,14 @@ const houseTypeMap = {
   rentPart:'求合租',
 }
 export default {
+  data(){
+    return {
+      detialShow:false
+    }
+  },
   components:{
-    ImageSlider
+    ImageSlider,
+    HouseDetial
   },
   props:['data'],
   filters:{
@@ -45,8 +70,12 @@ export default {
     }
   },
   methods:{
-    itemClick(e){
-      console.log(e)
+    ...mapMutations({
+      addBlock:'m_add_block',
+      addBlackList:'m_add_blacklist'
+    }),
+    itemClick(){
+      this.detialShow = true
     }
   }
 }
@@ -54,25 +83,24 @@ export default {
 
 <style lang="scss" scoped>
 $color-light:#89c1c0;
+
 .comp-house-item {
-  background: #fff;
   flex: 1 0;
-  min-height: 200px;
-  overflow: hidden;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.09);
-  padding: 8px;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.3s;
-  &:hover{
-    box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.09);
-    transform: scale(1.01);
-  }
-  &:not(:last-child),
-  &:not(:nth-child(5n)) {
+  overflow: hidden;  
+  &:not(:last-child) {
     margin-right: 16px;
   }
 }
+
+.house-item-box {
+  background: #fff;
+  padding: 8px;
+  border-radius: 3px;
+  min-height: 200px;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.09);
+}
+
 .item-top {
   font-size: 12px;
   white-space: nowrap;
@@ -114,15 +142,20 @@ $color-light:#89c1c0;
   min-height:55px;
   font-size: 14px;
   line-height: 1.5;
+}
+.type-tag {
+  font-size: 12px;
+  color: #fff;
+  padding: 1px 3px;
+  background: $color-light;
+  border-radius: 4px;
+}
+.el-dialog__header {
   .type-tag {
-    font-size: 12px;
-    color: #fff;
-    padding: 1px 3px;
-    background: $color-light;
-    border-radius: 4px;
+    font-size: 16px;
+    margin-right: 8px;
   }
 }
-
 .footer{
   font-size: 12px;
   margin-top: 8px;
@@ -131,6 +164,16 @@ $color-light:#89c1c0;
   }
   .iconfont{
     font-size: 12px;
+  }
+}
+.house-opt{
+  a {
+    margin-right: 8px;
+    color:#666;
+    cursor: pointer;
+    &.active{
+      color:#fb4b52;
+    }
   }
 }
 </style>

@@ -27,7 +27,9 @@ export default new Vuex.Store({
       show:false,
       imgs:[]
     },
-    houses:[]
+    houses:[],
+    block:[],
+    blacklist:[]
   },
   mutations: {
     'm_set_me'(state,payload) {
@@ -48,6 +50,22 @@ export default new Vuex.Store({
     'm_set_location'(state,payload){
       state.searchForm.currLoc = payload
       state.searchForm.queryCond.location = payload
+    },
+    'm_add_block'(state,payload){
+      if(!state.block.find(el=>el.id===payload.id)){
+        state.block.push(payload)
+      }
+    },
+    'm_add_blacklist'(state,payload){
+      if(!state.blacklist.find(el=>el.id===payload.id)){
+        state.blacklist.push(payload)
+      }
+    },
+    'm_remove_block'(state,payload){
+      state.block = state.block.filter(el=>el.id!==payload)
+    },
+    'm_remove_blacklist'(state,payload){
+      state.block = state.blacklist.filter(el=>el.id!==payload)
     },
   },
   actions: {

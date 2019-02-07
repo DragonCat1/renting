@@ -189,10 +189,37 @@ async function editMe(payload){
 // }
 //"orderSelected": "cheap"  "orderSelected": "new"  "orderSelected": "near"
 
+/**
+ * 房子列表
+ */
 async function listHouse(payload=store.state.searchForm){
   try{
     const result = await Cloud.run('listHouse',payload)
     store.commit('m_set_houses',result,true)
+    return result
+  }
+  catch(e){
+    throw e
+  }
+}
+
+/**
+ * 房子详情
+ * @param {房子id} id 
+ */
+async function queryHouseById(houseId){
+  try{
+    const result = await Cloud.run('queryHouseById',{houseId})
+    return result
+  }
+  catch(e){
+    throw e
+  }
+}
+
+async function listCommentByHouse(houseId){
+  try{
+    const result = await Cloud.run('listCommentByHouse',{houseId})
     return result
   }
   catch(e){
@@ -214,11 +241,9 @@ async function main(){
 }
 main()
 
-async function test(){
-  
-  
-}
-test()
+;(async function test(){
+  // new Query('Comment').get('5c3813480b6160007025c884')
+})()
 
 export {
   init,
@@ -226,5 +251,7 @@ export {
   login,
   logout,
   editMe,
-  listHouse
+  listHouse,
+  queryHouseById,
+  listCommentByHouse
 }

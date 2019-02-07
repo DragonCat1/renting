@@ -30,7 +30,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-navigator.geolocation.getCurrentPosition(e => {
-  const {coords:{longitude,latitude}} = e
-  store.commit('m_set_location',`${longitude.toFixed(6)},${latitude.toFixed(6)}`)
-})
+// navigator.geolocation.getCurrentPosition(e => {
+//   const {coords:{longitude,latitude}} = e
+//   store.commit('m_set_location',`${longitude.toFixed(6)},${latitude.toFixed(6)}`)
+// })

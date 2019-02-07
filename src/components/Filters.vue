@@ -122,7 +122,7 @@ export default {
           key:'currLoc'
         },
         {
-          label:'距离',
+          label:'半径(km)',
           type:'number',
           key:'queryCond.nearbySelected'
         },
@@ -139,6 +139,11 @@ export default {
       searchForm: state => state.searchForm,
       isLogin:state=>state.isLogin,
     })
+  },
+  watch:{
+    'searchForm.currLoc'(){
+      this.onChange()
+    }
   },
   methods:{
     async onChange(){

@@ -19,7 +19,7 @@
       @slideChangeTransitionStart="slideChangeTransitionStart(1)"
     >
       <swiperSlide v-for="(item,index) in image.imgs" :key="index">
-        <img :src="item">
+        <Img :size="100" :src="item"/>
       </swiperSlide>
     </swiper>
   </div>
@@ -30,12 +30,14 @@
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import {mapState} from 'vuex'
 import mixImageViewer from '../mixins/imageViewer'
+import Img from '../components/Img'
 
 export default {
   mixins:[mixImageViewer],
   components:{
     swiper,
-    swiperSlide
+    swiperSlide,
+    Img
   },
   data(){
     return {
@@ -127,7 +129,7 @@ export default {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 10000;
+  z-index: 20000;
   .swiper-container {
     overflow: visible;
   }
