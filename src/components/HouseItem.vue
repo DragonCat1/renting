@@ -166,6 +166,9 @@ $color-light:#89c1c0;
     margin-right: 8px;
     color:#666;
     cursor: pointer;
+    &:hover{
+      color:#89c1c0;
+    }
     &.active{
       color:#fb4b52;
     }
