@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import House from './views/House.vue'
-import Me from './views/Me.vue'
+import House from './views/House'
+import Me from './views/Me'
+import Like from './views/Like'
+import Block from './views/Block'
+import BlackList from './views/BlackList'
 
 Vue.use(Router)
 export const routes =  [
@@ -16,15 +19,18 @@ export const routes =  [
   },
   {
     path: '/like',
-    name: 'like'
+    name: 'like',
+    component:Like
   },
   {
     path: '/block',
-    name: 'block'
+    name: 'block',
+    component: Block,
   },
   {
-    path: '/black list',
-    name: 'blackList'
+    path: '/blacklist',
+    name: 'blackList',
+    component: BlackList,
   },
   {
     path: '/me',

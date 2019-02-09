@@ -2,7 +2,7 @@
   <div class="image-slider">
     <swiper :options="swiperOption">
       <swiperSlide v-for="(image,index) in images" :key="image">
-        <div class="image-wrap">
+        <div class="image-wrap" :style="{width:size+'px',height:size+'px'}">
           <Img :src="image" :size="size" v-preview="{images,index}"/>
         </div>
       </swiperSlide>
@@ -60,9 +60,6 @@ $color-light:#89c1c0;
   }
   
   .image-wrap{
-    $size: 100px;
-    width: $size;
-    height: $size;
     background: #000;
     img {
       width: 100%;
@@ -72,32 +69,6 @@ $color-light:#89c1c0;
       &:active{
         cursor:grabbing;
       }
-    }
-  }
-}
-.images {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 2px;
-  height:102px;
-  // &::-webkit-scrollbar {
-  //   height: 2px;
-  // }
-  // &::-webkit-scrollbar-thumb {
-  //   background: $color-light;
-  // }
-  &--wrap {
-    $size: 100px;
-    width: $size;
-    height: $size;
-    background: #000;
-    &:not(:last-child) {
-      margin-right: 8px;
-    }
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
     }
   }
 }

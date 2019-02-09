@@ -33,10 +33,23 @@
           this.drawCircle()
         }
       },
-      points:{
-        handler(newVal){
-          console.log(newVal)
-        }
+      points(newVal){
+        this.pointMarks.forEach(el=>{
+          el.setMap(null)
+          el = null
+        })
+        this.pointMarks = []
+        newVal.forEach((el,index)=>{
+          const {latitude,longitude} = el.location
+          const point = new window.AMap.Marker({
+            content:'<img width="19px" height="33px" src="//webapi.amap.com/theme/v1.3/markers/b/mark_rs.png">',
+            map: this.map,
+            position:[longitude,latitude],
+            label:{content:index+1,offset:new window.AMap.Pixel(2,38)},
+            title:el.title
+          })
+          this.pointMarks.push(point)
+        })
       }
     },
     methods:{
@@ -88,6 +101,8 @@
         })
       },
       onLocationComplete(data){
+        this.contextMenuPositon = data.position
+        this.markPoint()
         const {lat,lng} = data.position
         this.$emit('location',{lat,lng})
       },

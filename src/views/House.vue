@@ -1,9 +1,9 @@
 <template>
   <div class="view-home">
     <Filters/>
-    <Map @location="onLocation" :distance="distance"/>
+    <Map @location="onLocation" :distance="distance" :points="housesFilted.map(el=>({location:el.location,image:el.userAvatarUrl,id:el.objectId,title:el.title}))"/>
     <div class="houses flex-center">
-      <HouseItem v-for="item in houses" :key="item.objectId" :data="item"/>
+      <HouseItem v-for="item in housesFilted" :key="item.objectId" :data="item"/>
     </div>
   </div>
 </template>
@@ -23,8 +23,13 @@ export default {
   computed:{
     ...mapState({
       houses: state => state.houses,
+      block: state => state.block,
+      blacklist: state => state.blacklist,
       distance:state => state.searchForm.queryCond.nearbySelected
-    })
+    }),
+    housesFilted(){
+      return this.houses.filter(el=>!this.block.find(item=>item.id===el.objectId) && !this.blacklist.find(item=>item.id===el.avUserId))
+    }
   },
   methods:{
     ...mapMutations({

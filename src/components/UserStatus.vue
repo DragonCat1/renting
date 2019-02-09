@@ -37,7 +37,10 @@ export default {
   data(){
     return {
       loginVisible:false,
-      form:{}
+      form:{
+        username:'28i85ifaiayy7jw3apg3m67ex',
+        password:'123456'
+      }
     }
   },
   computed:{

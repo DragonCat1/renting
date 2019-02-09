@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="title">
-        <span class="type-tag">{{data.houseType | houseType}}</span>
+        <span class="type-tag">{{data.houseType | houseTypeMap}}</span>
         {{data.title}}
       </div>
       <ImageSlider :images="data.images" :size="100" />
@@ -33,26 +33,20 @@
       </span>
       <div slot="title">
         <span class="house-opt">
-          <a @click="addBlock({id:data.objectId,title:data.title,images:data.images})"><i class="iconfont ic-block"/></a>
-          <a @click="addBlackList({id:data.avUserId,avatar:data.userAvatarUrl,nickname:data.userNickName})"><i class="iconfont ic-black"/></a>
+          <a :class="{active:block.find(el=>el.id===data.objectId)}" @click="addBlock({id:data.objectId,title:data.title,images:data.images})"><i class="iconfont ic-block"/></a>
+          <a :class="{active:blacklist.find(el=>el.id===data.avUserId)}" @click="addBlackList({id:data.avUserId,avatar:data.userAvatarUrl,nickname:data.userNickName})"><i class="iconfont ic-black"/></a>
         </span>
-        <span class="type-tag">{{data.houseType | houseType}}</span>{{data.title}}</div>
+        <span class="type-tag">{{data.houseType | houseTypeMap}}</span>{{data.title}}</div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapState,mapMutations} from 'vuex'
 import ImageSlider from './ImageSlider'
 import HouseDetial from './HouseDetial'
 
-const houseTypeMap = {
-  sublet:'转租',
-  entire:'整租',
-  roomy:'找室友',
-  rentEntire:'求整租',
-  rentPart:'求合租',
-}
+
 export default {
   data(){
     return {
@@ -64,10 +58,11 @@ export default {
     HouseDetial
   },
   props:['data'],
-  filters:{
-    houseType(value){
-      return houseTypeMap[value]
-    }
+  computed:{
+    ...mapState({
+      block:state=>state.block,
+      blacklist:state=>state.blacklist,
+    })
   },
   methods:{
     ...mapMutations({

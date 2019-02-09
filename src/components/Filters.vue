@@ -1,6 +1,6 @@
 <template>
   <div class="comp-filters">
-    <el-form inline size="mini" :model="searchForm" label-width="5em" v-loading="loading" :disabled="!isLogin">
+    <el-form inline size="mini" :model="searchForm" label-width="6em" v-loading="loading" :disabled="!isLogin">
       <form-item
         v-for="item in option"
         :key="item.key"

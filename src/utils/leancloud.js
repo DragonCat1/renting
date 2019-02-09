@@ -227,6 +227,16 @@ async function listCommentByHouse(houseId){
   }
 }
 
+async function listUserLikeHouses(houseIds=[]){
+  try{
+    const result = await Cloud.run('listUserLikeHouses',{houseIds})
+    return result
+  }
+  catch(e){
+    throw e
+  }
+}
+
 async function main(){
   init()
   const currentUser = User.current()
@@ -253,5 +263,6 @@ export {
   editMe,
   listHouse,
   queryHouseById,
-  listCommentByHouse
+  listCommentByHouse,
+  listUserLikeHouses
 }

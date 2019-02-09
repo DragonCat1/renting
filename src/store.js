@@ -65,7 +65,7 @@ export default new Vuex.Store({
       state.block = state.block.filter(el=>el.id!==payload)
     },
     'm_remove_blacklist'(state,payload){
-      state.block = state.blacklist.filter(el=>el.id!==payload)
+      state.blacklist = state.blacklist.filter(el=>el.id!==payload)
     },
   },
   actions: {

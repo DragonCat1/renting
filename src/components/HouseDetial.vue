@@ -32,7 +32,7 @@
     </section>
     <section class="flex flex-wrap">
       <div class="image" v-for="(img,index) in data.images" :key="img">
-        <Img :size="173 * 2" :src="img" v-preview="{images:data.images,index}"/>
+        <Img :size="173" :src="img" v-preview="{images:data.images,index}"/>
       </div>
     </section>
     <section>

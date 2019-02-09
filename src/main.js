@@ -5,23 +5,19 @@ import router from './router'
 import store from './store'
 import Icon from './components/Icon.vue'
 import preview from './plugins/preview'
-import moment from 'moment'
+import filters from './filters'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'swiper/dist/css/swiper.min.css'
 import './style/index.scss'
 
 
 Vue.config.productionTip = false
-moment.locale('zh-cn')
+
 Vue.use(element)
 Vue.use(preview)
+Vue.use(filters)
 Vue.component('Icon',Icon)
-Vue.filter('fromNow', function (value) {
-  return moment(value).fromNow()
-})
-Vue.filter('format', function (value) {
-  return moment(value).format('YYYY/MM/DD hh:mm')
-})
+
 
 
 new Vue({
