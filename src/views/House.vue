@@ -35,7 +35,16 @@ export default {
     ...mapMutations({
       setLocation:'m_set_location'
     }),
-    onLocation({lat,lng}){
+    onLocation(position){
+      let lat,lng
+      if(Array.isArray(position)) {
+        lng = +position[0]
+        lat = +position[1]
+      }
+      else {
+        lng = position.lng
+        lat = position.lat
+      }
       this.setLocation(`${lng.toFixed(6)},${lat.toFixed(6)}`)
     }
   }
