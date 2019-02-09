@@ -237,6 +237,16 @@ async function listUserLikeHouses(houseIds=[]){
   }
 }
 
+async function contactUser(houseUserId,houseCity,houseId){
+  try{
+    const result = await Cloud.run('contactUser',{houseUserId,houseCity,houseId})
+    return result
+  }
+  catch(e){
+    throw e
+  }
+}
+
 async function main(){
   init()
   const currentUser = User.current()
@@ -264,5 +274,6 @@ export {
   listHouse,
   queryHouseById,
   listCommentByHouse,
-  listUserLikeHouses
+  listUserLikeHouses,
+  contactUser
 }

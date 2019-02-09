@@ -19,6 +19,10 @@
     </section>
     <section>
       <p class="flex-between">
+        <span>电话:{{contact.phone}}</span>
+        <span>微信:{{contact.wechat}}</span>
+      </p>
+      <p class="flex-between">
         <span>{{data.city}}·{{data.district}}·{{data.township}}</span>
         <span>{{data.genderLimit | genderMap}}</span>
       </p>
@@ -55,7 +59,7 @@
 </template>
 
 <script>
-import { queryHouseById, listCommentByHouse} from '../utils/leancloud'
+import { queryHouseById, listCommentByHouse,contactUser} from '../utils/leancloud'
 import Img from './Img'
 
 const genderMap = {
@@ -73,7 +77,11 @@ export default {
   data(){
     return {
       data:{location:{}},
-      comments:[]
+      comments:[],
+      contact:{
+        phone:'',
+        wechat:''
+      }
     }
   },
   filters:{
@@ -95,6 +103,10 @@ export default {
     fetch(){
       queryHouseById(this.oid).then(result=>{
         this.data = result
+        const {avUserId,city,objectId} = result
+        contactUser(avUserId,city,objectId).then(result=>{
+          this.contact = result
+        })
       })
       listCommentByHouse(this.oid).then(result=>{
         this.comments = result
