@@ -34,6 +34,9 @@
         <span class="price">{{data.price}}元/月</span>
       </p>
     </section>
+    <section>
+      <p class="house-desc">{{data.houseDesc}}</p>
+    </section>
     <section class="flex flex-wrap">
       <div class="image" v-for="(img,index) in data.images" :key="img">
         <Img :size="173" :src="img" v-preview="{images:data.images,index}"/>
@@ -142,6 +145,9 @@ $color-light:#89c1c0;
       height: 100%;
       object-fit: cover;
     }
+  }
+  .house-desc {
+    line-height: 1.5;
   }
   .item-top {
     font-size: 16px;

@@ -1,6 +1,6 @@
 <template>
   <!-- <transition name="el-zoom-in-top"> -->
-  <div class="comp-image-viewer" v-if="image.show">
+  <div class="comp-image-viewer" v-if="image.show" @keydown.esc="handleKey" tabindex="0" ref="container">
     <swiper
       ref="swiper1"
       class="swiper1"
@@ -51,7 +51,6 @@ export default {
     swiperOption1(){
       return {
         initialSlide:this.image.index,
-        // mousewheel:true,
         keyboard: {
           enabled: true,
         },
@@ -75,6 +74,9 @@ export default {
     'image.show'(newVal){
       if(newVal){
         document.documentElement.style.overflow="hidden"
+        this.$nextTick(()=>{
+          this.$refs.container.focus()
+        })
       }
       else{
         document.documentElement.style.overflow=""
@@ -83,7 +85,8 @@ export default {
   },
   methods:{
     handleKey(e){
-      e.key==='Escape' && this.closeImage()
+      e.stopPropagation()
+      this.closeImage()
     },
     onDblclick(e){
       if(this.closeTimer){
@@ -111,12 +114,6 @@ export default {
         this.closeTimer = null
       }, 250)
     }
-  },
-  mounted(){
-    window.addEventListener('keyup',this.handleKey)
-  },
-  beforeDestroy(){
-    window.removeEventListener('keyup',this.handleKey)
   }
 }
 </script>
@@ -129,6 +126,7 @@ export default {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.8);
+  outline: none;
   z-index: 20000;
   .swiper-container {
     overflow: visible;
