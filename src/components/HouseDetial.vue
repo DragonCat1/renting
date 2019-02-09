@@ -41,6 +41,9 @@
       <div class="image" v-for="(img,index) in data.images" :key="img">
         <Img :size="173" :src="img" v-preview="{images:data.images,index}"/>
       </div>
+      <div class="image">
+        <img :src="data.qrImgUrl" v-preview>
+      </div>
     </section>
     <section>
       <h2>留言({{data.commentCount}})</h2>

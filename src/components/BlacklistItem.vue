@@ -1,7 +1,7 @@
 <template>
   <div class="blacklist-item">
     <a @click="removeBlacklist(data.id)"><i class="iconfont ic-delete"/></a>
-    <p>{{data.nickname}}</p>
+    <p :title="data.nickname">{{data.nickname}}</p>
     <img :src="data.avatar" v-preview/>
   </div>
 </template>

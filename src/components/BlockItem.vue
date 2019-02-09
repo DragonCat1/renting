@@ -2,7 +2,7 @@
 <div>
   <div class="block-item" @click="itemClick">
     <a @click="removeBlock(data.id)"><i class="iconfont ic-delete"/></a>
-    <p>{{data.title}}</p>
+    <p :title="data.title">{{data.title}}</p>
     <ImageSlider :images="data.images" :size="100" />
   </div>
   <el-dialog
@@ -55,10 +55,15 @@ export default {
   position: relative;
   background: #fff;
   border-radius: 3px;
-  width: 200px;
+  width: 250px;
   margin: 8px;
   padding: 8px;
   cursor: pointer;
+  p{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
   a {
     position: absolute;
     top: 5px;
