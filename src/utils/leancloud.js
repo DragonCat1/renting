@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import AV from 'leancloud-storage'
 // import { Realtime, TextMessage } from 'leancloud-realtime'
 import store from '../store'
