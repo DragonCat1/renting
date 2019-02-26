@@ -1,6 +1,7 @@
 <template>
   <div>
     like
+    <img src="../assets/minecraft.png">
   </div>
 </template>
 
