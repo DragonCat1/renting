@@ -69,6 +69,7 @@ export default {
       const {AMap} = window
       this.map = new AMap.Map(this.$refs.map,{
         mapStyle:'amap://styles/2858b1c25bd2ef905ae7a4aef271292c',
+        keyboardEnable:false
         // pitch:10, // 地图俯仰角度，有效范围 0 度- 83 度
         // viewMode:'3D' // 地图模式
       })
@@ -146,12 +147,12 @@ export default {
         center: [lng, lat],
         radius: this.distance * 1000,
         borderWeight: 1,
-        strokeColor: "#1791fc", 
+        strokeColor: "#1791fc",
         strokeOpacity: 1,
         strokeWeight: 1,
         fillOpacity: 0.4,
         strokeStyle: 'solid',
-        strokeDasharray: [10, 10], 
+        strokeDasharray: [10, 10],
         fillColor: '#1791fc',
       })
       this.circle.setMap(this.map)

@@ -18,7 +18,7 @@
         <span class="type-tag">{{data.houseType | houseTypeMap}}</span>
         {{data.title}}
       </div>
-      <ImageSlider :images="data.images" :size="100" />
+      <ImageSlider :quickView="quickView" :images="data.images" :size="100" />
       <div class="footer flex-between">
         <span class="location"><i class="iconfont ic-location"/>{{data.location.name}}</span>
         <span class="area">{{data.district}}-{{data.township}}</span>
@@ -57,7 +57,7 @@ export default {
     ImageSlider,
     HouseDetial
   },
-  props:['data'],
+  props:['data','quickView'],
   computed:{
     ...mapState({
       block:state=>state.block,
@@ -81,7 +81,7 @@ $color-light:#89c1c0;
 
 .comp-house-item {
   flex: 1 0;
-  overflow: hidden;  
+  overflow: hidden;
   &:not(:last-child) {
     margin-right: 16px;
   }

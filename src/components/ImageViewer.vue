@@ -1,6 +1,6 @@
 <template>
   <!-- <transition name="el-zoom-in-top"> -->
-  <div class="comp-image-viewer" v-if="image.show" @keydown.esc="handleKey" tabindex="0" ref="container">
+  <div class="comp-image-viewer" v-if="image.show" @keydown.esc.stop="handleKey" tabindex="0" ref="container">
     <swiper
       ref="swiper1"
       class="swiper1"
@@ -84,8 +84,7 @@ export default {
     }
   },
   methods:{
-    handleKey(e){
-      e.stopPropagation()
+    handleKey(){
       this.closeImage()
     },
     onDblclick(e){

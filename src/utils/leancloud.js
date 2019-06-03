@@ -193,8 +193,9 @@ async function editMe(payload){
  */
 async function listHouse(payload=store.state.searchForm){
   try{
+    store.commit('m_set_loading',true)
     const result = await Cloud.run('listHouse',payload)
-    store.commit('m_set_houses',result,true)
+    store.commit('m_set_houses',result)
     return result
   }
   catch(e){
@@ -204,7 +205,7 @@ async function listHouse(payload=store.state.searchForm){
 
 /**
  * 房子详情
- * @param {房子id} id 
+ * @param {房子id} id
  */
 async function queryHouseById(houseId){
   try{

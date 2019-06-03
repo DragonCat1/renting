@@ -8,6 +8,13 @@
         :onChange="onChange"
         :model="searchForm"
       />
+      <el-form-item label="性别">
+        <el-select v-model="filter.sex">
+          <el-option label="不限" value="不限"/>
+          <el-option label="男" value="男"/>
+          <el-option label="女" value="女"/>
+        </el-select>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -62,7 +69,6 @@ Vue.component('form-item', {
 export default {
   data(){
     return{
-      loading:false,
       option:[
         {
           label:'关键字',
@@ -137,7 +143,9 @@ export default {
   computed:{
     ...mapState({
       searchForm: state => state.searchForm,
+      filter:state => state.filter,
       isLogin:state=>state.isLogin,
+      loading:state=>state.loading,
     })
   },
   watch:{
@@ -147,9 +155,7 @@ export default {
   },
   methods:{
     async onChange(){
-      this.loading = true
       await listHouse()
-      this.loading = false
     }
   }
 }

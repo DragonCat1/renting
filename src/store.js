@@ -23,11 +23,15 @@ export default new Vuex.Store({
         orderSelected:''
       }
     },
+    filter:{
+      sex:'不限'
+    },
     image:{
       show:false,
       imgs:[]
     },
     houses:[],
+    loading:false,
     block:[],
     blacklist:[]
   },
@@ -43,6 +47,10 @@ export default new Vuex.Store({
     },
     'm_set_houses'(state,payload){
       state.houses=payload
+      state.loading=false
+    },
+    'm_set_loading'(state,payload){
+      state.loading=payload
     },
     'm_append_houses'(state,payload){
       state.houses.push(...payload)

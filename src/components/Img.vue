@@ -1,5 +1,5 @@
 <template>
-  <img :src="`${src}?imageView/1/w/${Size}/h/${Size}/q/100/format/jpg`">
+  <img :src="`${src}?imageView/1/w/${Size}/h/${Size}/q/100/format/jpg`" :srcset="`${src}?imageView/1/w/${Size}/h/${Size}/q/100/format/jpg,${src}?imageView/1/w/${Size}/h/${Size}/q/100/format/jpg 2x`">
 </template>
 
 <script>

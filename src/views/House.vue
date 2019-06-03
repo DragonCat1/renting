@@ -1,9 +1,9 @@
 <template>
-  <div class="view-home">
+  <div class="view-home" tabindex="0" @keydown.left="pageNumber>0&&pageNumber--" @keydown.right="pageNumber+=1">
     <Filters/>
     <Map @location="onLocation" :distance="distance" :points="housesFilted.map(el=>({location:el.location,image:el.userAvatarUrl,id:el.objectId,title:el.title}))"/>
     <div class="houses flex-center">
-      <HouseItem v-for="item in housesFilted" :key="item.objectId" :data="item"/>
+      <HouseItem :quickView="500" v-for="item in housesFilted" :key="item.objectId" :data="item"/>
     </div>
   </div>
 </template>
@@ -13,6 +13,8 @@ import Filters from '../components/Filters'
 import HouseItem from '../components/HouseItem'
 import Map from '../components/Map'
 import {mapState,mapMutations} from 'vuex'
+import {listHouse} from '@/utils/leancloud'
+
 
 export default {
   components: {
@@ -25,11 +27,27 @@ export default {
       houses: state => state.houses,
       block: state => state.block,
       blacklist: state => state.blacklist,
-      distance:state => state.searchForm.queryCond.nearbySelected
+      distance:state => state.searchForm.queryCond.nearbySelected,
+      searchForm:state => state.searchForm,
+      filter:state => state.filter,
     }),
     housesFilted(){
-      return this.houses.filter(el=>!this.block.find(item=>item.id===el.objectId) && !this.blacklist.find(item=>item.id===el.avUserId))
-    }
+      return this.houses.filter(
+        el=>
+          !this.block.find(item=>item.id===el.objectId) &&
+          !this.blacklist.find(item=>item.id===el.avUserId) &&
+          (el.gender===this.filter.sex||this.filter.sex==='不限')
+        )
+    },
+    pageNumber:{
+      get(){
+        return this.searchForm.pageNumber
+      },
+      set(value){
+        this.searchForm.pageNumber = value
+        listHouse()
+      }
+    },
   },
   methods:{
     ...mapMutations({
