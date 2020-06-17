@@ -239,7 +239,7 @@ async function listUserLikeHouses(houseIds=[]){
 
 async function contactUser(houseUserId,houseCity,houseId){
   try{
-    const result = await Cloud.run('contactUser',{houseUserId,houseCity,houseId})
+    const result = await Cloud.run('contactUser',{houseUserId,houseCity,houseId,genderLimit:'all',isPaid:false})
     return result
   }
   catch(e){
