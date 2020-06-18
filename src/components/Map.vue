@@ -10,6 +10,9 @@
 <script>
 import {mapState} from 'vuex'
 
+
+const {AMap} = window
+
 export default {
   props:{
     distance:Number,
@@ -66,7 +69,6 @@ export default {
       this.draging = false
     },
     initMap(){
-      const {AMap} = window
       this.map = new AMap.Map(this.$refs.map,{
         mapStyle:'amap://styles/2858b1c25bd2ef905ae7a4aef271292c',
         keyboardEnable:false
@@ -115,12 +117,12 @@ export default {
       throw e
     },
     markPoint(){
-      const {AMap} = window
       if(this.curPoint){
         this.curPoint.setMap(null)
         this.curPoint = null
       }
       this.curPoint = new AMap.Marker({
+        bubble:true,
         map: this.map,
         position:this.contextMenuPositon, //基点位置
       })
@@ -143,7 +145,8 @@ export default {
         this.circle = null
       }
       const {lng,lat} = this.curPoint.getPosition()
-      this.circle = new window.AMap.Circle({
+      this.circle = new AMap.Circle({
+        bubble:true,
         center: [lng, lat],
         radius: this.distance * 1000,
         borderWeight: 1,
@@ -167,11 +170,12 @@ export default {
       this.pointMarks = []
       this.points.forEach((el,index)=>{
         const {latitude,longitude} = el.location
-        const point = new window.AMap.Marker({
+        const point = new AMap.Marker({
+          bubble:true,
           content:'<img width="19px" height="33px" src="//webapi.amap.com/theme/v1.3/markers/b/mark_rs.png">',
           map: this.map,
           position:[longitude,latitude],
-          label:{content:index+1,offset:new window.AMap.Pixel(2,38)},
+          label:{content:index+1,offset:new AMap.Pixel(2,38)},
           title:el.title
         })
         this.pointMarks.push(point)
@@ -191,36 +195,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.map-wrap{
+.map-wrap {
   background: #2b2b2b;
   overflow: hidden;
-  padding:8px 0;
+  padding: 8px;
 }
-.map{
+.map {
   box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.5);
-  width: 1200px;
+  width: 100%;
 }
-.map-canvas{
+.map-canvas {
   border: 1px solid #fefefe;
-  /deep/ .context-menu{
+  /deep/ .context-menu {
     white-space: nowrap;
     background: #fff;
-    a{
+    a {
       display: block;
-      padding:5px;
+      padding: 5px;
       cursor: pointer;
-      &:hover{
-        background:darken($color: #fff, $amount: 10%);
+      &:hover {
+        background: darken($color: #fff, $amount: 10%);
       }
     }
   }
 }
-.map-drager{
-  height:5px;
+.map-drager {
+  height: 5px;
   cursor: ns-resize;
   background: #b8f3a5;
-  &:hover{
-    background:darken($color: #b8f3a5, $amount: 10%);
+  &:hover {
+    background: darken($color: #b8f3a5, $amount: 10%);
   }
 }
 </style>
