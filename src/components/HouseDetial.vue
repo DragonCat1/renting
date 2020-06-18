@@ -47,19 +47,34 @@
     </section>
     <section v-if="data.commentCount">
       <h2>留言({{data.commentCount}})</h2>
-      <div class="comment flex" v-for="item in comments" :key="item.objectId">
-        <img class="head" :src="item.userAvatarUrl" v-preview/>
-        <div class="flex-column flex-grow">
-          <div class="flex-between">
-            <span>{{item.userNickName}} {{item.userGender==='男'?'&#x1F466;&#x1F3FB;':'&#x1F467;&#x1F3FB;'}}</span>
-            <span>{{item.createdAt | format}}</span>
+      <div>
+        <div class="comment flex" v-for="item in comments" :key="item.objectId">
+          <img class="head" :src="item.userAvatarUrl" v-preview/>
+          <div class="flex-column flex-grow">
+            <div class="flex-between">
+              <span>{{item.userNickName}} {{item.userGender==='男'?'&#x1F466;&#x1F3FB;':'&#x1F467;&#x1F3FB;'}}</span>
+              <span>{{item.createdAt | format}}</span>
+            </div>
+            <div class="comment-content">
+              {{item.content}}
+            </div>
+            <span class="align-right" v-if="item.quoteUserName">回复·{{item.quoteUserName}}</span>
           </div>
-          <div class="comment-content">
-            {{item.content}}
-          </div>
-          <span class="align-right" v-if="item.quoteUserName">回复·{{item.quoteUserName}}</span>
         </div>
       </div>
+    </section>
+    <section class="reply-area">
+      <el-form size="small">
+        <el-form-item>
+          <el-input type="textarea" placeholder="留言" v-model="form.content"/>
+        </el-form-item>
+        <el-form-item label="私密">
+          <el-checkbox v-model="form.hidden"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleSubmit">提交</el-button>
+        </el-form-item>
+      </el-form>
     </section>
   </div>
 </template>
@@ -87,6 +102,10 @@ export default {
       contact:{
         phone:'',
         wechat:''
+      },
+      form:{
+        content:'',
+        hidden:false
       }
     }
   },
@@ -117,13 +136,16 @@ export default {
       listCommentByHouse(this.oid).then(result=>{
         this.comments = result
       })
+    },
+    handleSubmit(){
+      alert('todo')
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-$color-light:#89c1c0;
+$color-light: #89c1c0;
 .comp-house-detail {
   section {
     margin: 8px 0;
@@ -134,13 +156,13 @@ $color-light:#89c1c0;
   }
   .price {
     font-size: 20px;
-    color:#fb4b52;
+    color: #fb4b52;
   }
-  .image{
+  .image {
     width: 173px;
     height: 173px;
     margin-bottom: 20px;
-    &:not(:nth-child(3n)){
+    &:not(:nth-child(3n)) {
       margin-right: 20px;
     }
     img {
@@ -159,7 +181,7 @@ $color-light:#89c1c0;
       margin: 0;
       line-height: 36px;
     }
-    .nickname{
+    .nickname {
       text-overflow: ellipsis;
       max-width: 10em;
       display: inline-block;
@@ -178,18 +200,21 @@ $color-light:#89c1c0;
       margin-left: 0.5em;
     }
   }
-  .comment{
-    margin:8px 0;
-    border-bottom:1px solid #eee;
-    padding-bottom:8px;
-    .head{
-      $size:66px;
+  .comment {
+    margin: 8px 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+    &:last-child {
+      border: none;
+    }
+    .head {
+      $size: 66px;
       margin-right: 12px;
       width: $size;
       height: $size;
       border-radius: $size / 2;
     }
-    &-content{
+    &-content {
       height: 26px;
       margin: 4px 0;
     }
