@@ -45,7 +45,7 @@
         <img :src="data.qrImgUrl" v-preview>
       </div>
     </section>
-    <section>
+    <section v-if="data.commentCount">
       <h2>留言({{data.commentCount}})</h2>
       <div class="comment flex" v-for="item in comments" :key="item.objectId">
         <img class="head" :src="item.userAvatarUrl" v-preview/>

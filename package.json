@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "inspect":"vue inspect > inspect.js",
+    "inspect": "vue inspect > inspect.js",
     "electron-main-build": "vue-cli-service build --mode electron-main",
     "electron-renderer-build": "vue-cli-service build --mode electron-renderer",
     "electron": "electron ./electron/main",
@@ -24,8 +24,7 @@
     "vue-awesome-swiper": "^3.1.3",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "vuex-persistedstate": "^2.5.4",
-    "electron": "^4.0.5"
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.3.0",

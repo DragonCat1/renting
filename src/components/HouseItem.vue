@@ -1,5 +1,5 @@
 <template>
-  <div class="comp-house-item">
+  <div class="comp-house-item" :class="{male:data.gender==='男',female:data.gender==='女'}">
     <div class="house-item-box" @click="itemClick">
       <div class="item-top flex-between">
         <img :src="data.userAvatarUrl" v-preview>
@@ -82,18 +82,23 @@ $color-light:#89c1c0;
 .comp-house-item {
   flex: 1 0;
   overflow: hidden;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.05);
   &:not(:last-child) {
     margin-right: 16px;
+  }
+  &.male .house-item-box{
+    background: #e3f3ff;
+  }
+  &.female .house-item-box{
+    background: #ffedf0;
   }
 }
 
 .house-item-box {
-  background: #fff;
   padding: 8px;
   border-radius: 3px;
   min-height: 200px;
   cursor: pointer;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.09);
 }
 
 .item-top {

@@ -3,6 +3,7 @@ import AV from 'leancloud-storage'
 import store from '../store'
 import config from '../config/leancloud'
 
+window.AV = AV
 const {Query,User,Cloud} = AV
 const {appId,appKey} = config
 

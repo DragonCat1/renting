@@ -90,7 +90,7 @@ export default {
           ]
         },
         {
-          label:'性别',
+          label:'性别要求',
           type:'select',
           key:'queryCond.genderSelected',
           options:[
