@@ -42,12 +42,12 @@ export default {
   watch:{
     distance(){
       if(this.curPoint){
-        this.drawCircle()
+        this.drawCircle(true)
       }
     },
     curPoint(newVal){
       if(newVal){
-        this.drawCircle()
+        this.drawCircle(true)
       }
     },
     points(){
@@ -147,7 +147,7 @@ export default {
         this.height = this.height + window.innerHeight - appEl.offsetHeight
       }
     },
-    drawCircle(){
+    drawCircle(fit){
       if(this.circle){
         this.circle.setMap(null)
         this.circle = null
@@ -168,7 +168,7 @@ export default {
       })
       this.circle.setMap(this.map)
       // 缩放地图到合适的视野级别
-      this.map.setFitView([ this.circle ])
+      fit && this.map.setFitView([ this.circle ])
     },
     drawPoints(){
       this.pointMarks.forEach(el=>{
@@ -184,8 +184,11 @@ export default {
           content:`<img style="width:36px;height:36px;border-radius:50%;" src="${el.image}"/>`,
           map: this.map,
           position:[longitude,latitude],
-          // label:{content:index+1,offset:new AMap.Pixel(2,38)},
+          label:{content:el.price,offset:new AMap.Pixel(0,38)},
           title:el.title
+        })
+        point.on('click',()=>{
+          this.$parent.$refs.HouseNode[index].itemClick()
         })
         this.pointMarks.push(point)
       })

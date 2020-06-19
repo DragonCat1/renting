@@ -1,9 +1,9 @@
 <template>
   <div class="view-home" tabindex="0" @keydown.left="pageNumber>0&&pageNumber--" @keydown.right="pageNumber+=1">
     <Filters/>
-    <Map @location="onLocation" :distance="distance" :points="housesFilted.map(el=>({location:el.location,image:el.userAvatarUrl,id:el.objectId,title:el.title}))"/>
+    <Map @location="onLocation" :distance="distance" :points="housesFilted.map(el=>({location:el.location,image:el.userAvatarUrl,id:el.objectId,title:el.title,price:el.price}))"/>
     <div class="houses flex-center">
-      <HouseItem :quickView="500" v-for="item in housesFilted" :key="item.objectId" :data="item"/>
+      <HouseItem ref="HouseNode" :quickView="800" v-for="item in housesFilted" :key="item.objectId" :data="item"/>
     </div>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.houses{
+.houses {
   padding: 8px;
 }
 </style>

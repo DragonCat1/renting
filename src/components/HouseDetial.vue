@@ -45,7 +45,7 @@
         <img :src="data.qrImgUrl" v-preview>
       </div>
     </section>
-    <section v-if="data.commentCount">
+    <section>
       <h2>留言({{comments.length}})</h2>
       <div>
         <div class="comment flex" v-for="item in comments" :key="item.objectId">
@@ -60,8 +60,8 @@
             </div>
             <span class="flex_c_b">
               <span>
-                <el-button type="text" @click="handleRemove(item)">删除</el-button>
-                <el-button v-if="item.avUserId!==state.me.id" type="text" @click="reply(item)">回复</el-button>
+                <el-button type="text" @click="handleRemove(item)" style="padding: 0;">删除</el-button>
+                <el-button v-if="item.avUserId!==state.me.id" type="text" @click="reply(item)" style="padding: 0;">回复</el-button>
               </span>
               <span v-if="item.quoteUserName">回复·{{item.quoteUserName}}</span>
             </span>

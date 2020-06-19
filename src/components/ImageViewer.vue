@@ -19,7 +19,7 @@
       @slideChangeTransitionStart="slideChangeTransitionStart(1)"
     >
       <swiperSlide v-for="(item,index) in image.imgs" :key="index">
-        <Img :size="100" :src="item"/>
+        <Img :size="200" :src="item"/>
       </swiperSlide>
     </swiper>
   </div>
@@ -132,20 +132,17 @@ export default {
   }
   .swiper-slide {
     width: initial;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 200px);
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     cursor: grab;
     overflow: auto;
-    &.image-scale{
-      align-items:flex-start;
+    &.image-scale {
+      align-items: flex-start;
     }
     &:active {
       cursor: grabbing;
-    }
-    &:hover {
-      background: rgba(0, 0, 0, 0.1);
     }
     img {
       max-width: 100%;
@@ -157,15 +154,15 @@ export default {
     }
   }
   .swiper-pagination {
-    bottom: -100px;
+    bottom: -200px;
   }
   .swiper2 {
     .swiper-slide {
       opacity: 0.5;
-      height: 100px;
+      height: 200px;
       img {
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
       }
       &-active {
         opacity: 1;
