@@ -110,6 +110,7 @@ export default {
             {label:'找室友',value:'roomy'},
             {label:'求整租',value:'rentEntire'},
             {label:'求合租',value:'rentPart'},
+            {label:'房东直租',value:'directRent'},
           ]
         },
         {
@@ -162,7 +163,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-form{
-  padding-top:18px;
+.el-form {
+  padding-top: 18px;
 }
 </style>

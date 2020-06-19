@@ -39,6 +39,9 @@ export default new Vuex.Store({
     'm_set_me'(state,payload) {
       Vue.set(state,'me',{...state.me,...payload})
     },
+    'm_remove_me'(state) {
+      Vue.set(state,'me',{})
+    },
     'm_set_login'(state,payload){
       state.isLogin = payload
     },
@@ -80,6 +83,6 @@ export default new Vuex.Store({
 
   },
   plugins: [createPersistedState({
-    key:'store'
+    key:'$store'
   })]
 })

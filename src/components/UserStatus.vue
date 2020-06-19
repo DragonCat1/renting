@@ -32,13 +32,13 @@
 import {mapState} from 'vuex'
 import {login,logout} from '../utils/leancloud'
 
-  
+
 export default {
   data(){
     return {
       loginVisible:false,
       form:{
-        username:'28i85ifaiayy7jw3apg3m67ex',
+        username:'ae1f031a9e8041d99d0ecbfee',
         password:'123456'
       }
     }
@@ -66,18 +66,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comp-user-status{
+.comp-user-status {
   position: absolute;
   right: 0;
-  &>div{
-    color:#fff;
+  & > div {
+    color: #fff;
     display: flex;
     align-items: center;
-    & > *:not(:last-child){
-      margin-right:16px;
+    & > *:not(:last-child) {
+      margin-right: 16px;
     }
-    img{
-      $size:35px;
+    img {
+      $size: 35px;
       width: $size;
       height: $size;
       border-radius: $size;

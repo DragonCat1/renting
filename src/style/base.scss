@@ -36,3 +36,27 @@ p {
 .text-dark {
   color: $dark-color;
 }
+
+.text-center {
+  text-align: center;
+}
+
+.w100 {
+  width:100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex_c_c {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex_c_b{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

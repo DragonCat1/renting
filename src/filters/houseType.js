@@ -4,6 +4,7 @@ const houseTypeMap = {
   roomy:'找室友',
   rentEntire:'求整租',
   rentPart:'求合租',
+  directRent:'房东直租'
 }
 
 export default {

@@ -3,7 +3,7 @@
     <div v-if="isLogin" style="width:500px;margin:auto;">
       <el-form :model="form">
         <el-form-item v-for="(value,key,index) in form" :key="index" :label="key">
-          <el-input v-model="form[key]" v-if="typeof value === 'string'"/>
+          <el-input placeholder="输入文本项" v-model="form[key]" v-if="typeof value === 'string'"/>
           <div v-if="typeof value === 'boolean'">
             <el-radio v-model="form[key]" :label="true">是</el-radio>
             <el-radio v-model="form[key]" :label="false">否</el-radio>
@@ -17,7 +17,7 @@
               >
               {{item}}
             </el-tag>
-            <input type="text" class="el-input__inner" @keypress.enter="e=>{form[key].push(e.target.value);e.target.value=''}">
+            <input type="text" placeholder="添加数组项" class="el-input__inner" @keypress.enter="e=>{form[key].push(e.target.value);e.target.value=''}">
           </div>
           <el-input-number v-if="typeof value === 'number'" v-model="form[key]"/>
           <el-button v-if="!isEqual(form[key],me[key])" type="primary" @click="save({[key]:form[key]})" :loading="saveing">保存</el-button>
@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.no-login{
+.no-login {
   height: 350px;
 }
 </style>

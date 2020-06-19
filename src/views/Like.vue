@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-center">
     like
     <img src="../assets/minecraft.png">
   </div>
@@ -7,10 +7,9 @@
 
 <script>
   export default {
-    
+
   }
 </script>
 
 <style scoped>
-
 </style>

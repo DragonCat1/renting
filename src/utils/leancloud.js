@@ -2,6 +2,9 @@ import AV from 'leancloud-storage'
 // import { Realtime, TextMessage } from 'leancloud-realtime'
 import store from '../store'
 import config from '../config/leancloud'
+import {Message} from 'element-ui'
+import {v4 as uuid} from 'uuid'
+
 
 window.AV = AV
 const {Query,User,Cloud} = AV
@@ -23,14 +26,46 @@ function init(_appId=appId,_appKey=appKey) {
 //   'gjKcqQRf6ubalUJz8a7n1ovC'
 // )
 
+function handleError(err) {
+  Message.error(String(err))
+}
+
 //注册
-async function reg({username,password}) {
-  let user = new User()
+async function reg({username = uuid().replace(/-/g,'').slice(0,25),password = '123456'}) {
+  const user = new User()
   user.setUsername(username)
   user.setPassword(password)
   const loggedInUser = await user.signUp()
+  Object.entries({
+    hasInfo:true,
+    age:'00后',
+    contactCount:0,
+    jifen:0,
+    star:'天蝎座',
+    wechatNickName:'王总',
+    wechatAvatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/sGsv1FlzMbshiblyEoCiaZiatvoK24hzic6QqYYGNic4GBIG3ojfdXcrGmgpFocHgV7BzkfQT2HOkOmEGoicN7MHYQtQ/0',
+    mobilePhoneNumber:'18764632356',
+    mobilePhoneVerified:true,
+    viewCount:0,
+    gender:'女',
+    authData:{
+      lc_weapp: {
+        session_key: "HjkNFZkKrZTM4gIaBM5e+A==",
+        openid: "o9an54swIF5wAdXfR9AgMdaE5sbE",
+        unionid: "o9paK1fuN2NaXay2SZ4pjBioVIJM"
+      }
+    },
+    lastLogin:'',
+    hasNotified:false,
+    views:[],
+    job:''
+  }).forEach(([key,val])=>{
+    loggedInUser.set(key,val)
+  })
+  await loggedInUser.save()
   return loggedInUser
 }
+window.reg = reg
 
 
 //登陆 28i85ifaiayy7jw3apg3m67ex 123456
@@ -46,6 +81,7 @@ function logout() {
   User.logOut()
   if(!User.current()){
     store.commit('m_set_login',false)
+    store.commit('m_remove_me')
   }
   return !User.current()
 }
@@ -61,7 +97,7 @@ async function editMe(payload){
       return newMe
     }
     catch(e) {
-      throw e
+      handleError(e)
     }
 }
 
@@ -200,7 +236,7 @@ async function listHouse(payload=store.state.searchForm){
     return result
   }
   catch(e){
-    throw e
+    handleError(e)
   }
 }
 
@@ -214,7 +250,7 @@ async function queryHouseById(houseId){
     return result
   }
   catch(e){
-    throw e
+    handleError(e)
   }
 }
 
@@ -224,7 +260,7 @@ async function listCommentByHouse(houseId){
     return result
   }
   catch(e){
-    throw e
+    handleError(e)
   }
 }
 
@@ -234,7 +270,7 @@ async function listUserLikeHouses(houseIds=[]){
     return result
   }
   catch(e){
-    throw e
+    handleError(e)
   }
 }
 
@@ -244,7 +280,73 @@ async function contactUser(houseUserId,houseCity,houseId){
     return result
   }
   catch(e){
-    throw e
+    handleError(e)
+  }
+}
+
+/**
+ * 留言
+ * @param {*} content
+ * @param {*} isPrivate
+ */
+async function addComment({content,isPrivate,houseId,houseUserId,quoteUser,quoteUserName,quoteContent}) {
+  const {me} = store.state
+  try {
+    const result = await Cloud.run('createCommentNewNotify',{
+      commentData:{
+        houseId,
+        houseUserId,
+        avUserId: me.id,
+        userGender: me.gender,
+        userNickName: me.wechatNickName,
+        userAvatarUrl: me.wechatAvatarUrl,
+        content,
+        isPrivate,
+        ...quoteUser?{
+          quoteUser,
+          quoteUserName,
+          quoteContent,
+          isQuotePrivate:isPrivate
+        }:{}
+      }
+    })
+    return result
+  }
+  catch(e){
+    handleError(e)
+    return false
+  }
+}
+
+async function removeComment({commentId,houseUserId,avUserId}) {
+  try {
+    const result = await Cloud.run('removeComment',{
+      commentId,houseUserId,avUserId
+    })
+    return result
+  }
+  catch(e){
+    handleError(e)
+    return false
+  }
+}
+
+/**
+ * 删除房子
+ */
+async function removeHouse(houseId) {
+  try {
+    const res = await Cloud.run('updateHouse',{
+      houseId,
+      houseData: {
+        status: "deleted"
+      }
+    })
+    return res
+  }
+  catch(e){
+    handleError(e)
+    return false
   }
 }
 
@@ -276,5 +378,8 @@ export {
   queryHouseById,
   listCommentByHouse,
   listUserLikeHouses,
-  contactUser
+  contactUser,
+  addComment,
+  removeComment,
+  removeHouse
 }

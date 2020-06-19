@@ -19,8 +19,21 @@ Vue.use(filters)
 Vue.component('Icon',Icon)
 
 
+Vue.use({
+  install(vue){
+    vue.mixin({
+      computed: {
+        state() {
+          return this.$store.state
+        }
+      }
+    })
+  }
+})
 
-new Vue({
+
+
+window.$app = new Vue({
   router,
   store,
   render: h => h(App)
@@ -30,3 +43,5 @@ new Vue({
 //   const {coords:{longitude,latitude}} = e
 //   store.commit('m_set_location',`${longitude.toFixed(6)},${latitude.toFixed(6)}`)
 // })
+
+store.commit('m_set_loading',false)

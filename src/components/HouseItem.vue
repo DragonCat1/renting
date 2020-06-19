@@ -33,8 +33,21 @@
       </span>
       <div slot="title">
         <span class="house-opt">
-          <a :class="{active:block.find(el=>el.id===data.objectId)}" @click="addBlock({id:data.objectId,title:data.title,images:data.images})"><i class="iconfont ic-block"/></a>
-          <a :class="{active:blacklist.find(el=>el.id===data.avUserId)}" @click="addBlackList({id:data.avUserId,avatar:data.userAvatarUrl,nickname:data.userNickName})"><i class="iconfont ic-black"/></a>
+          <el-tooltip class="item" effect="dark" content="屏蔽" placement="top">
+            <a :class="{active:block.find(el=>el.id===data.objectId)}" @click="addBlock({id:data.objectId,title:data.title,images:data.images})">
+              <i class="el-icon-remove"></i>
+            </a>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="加入黑名单" placement="top">
+            <a :class="{active:blacklist.find(el=>el.id===data.avUserId)}" @click="addBlackList({id:data.avUserId,avatar:data.userAvatarUrl,nickname:data.userNickName})">
+              <i class="el-icon-error"></i>
+            </a>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="删除" placement="top">
+            <a @click="handleRemove">
+              <i class="el-icon-delete-solid"></i>
+            </a>
+          </el-tooltip>
         </span>
         <span class="type-tag">{{data.houseType | houseTypeMap}}</span>{{data.title}}</div>
     </el-dialog>
@@ -45,6 +58,7 @@
 import {mapState,mapMutations} from 'vuex'
 import ImageSlider from './ImageSlider'
 import HouseDetial from './HouseDetial'
+import { removeHouse } from '../utils/leancloud'
 
 
 export default {
@@ -71,13 +85,20 @@ export default {
     }),
     itemClick(){
       this.detialShow = true
+    },
+    async handleRemove(){
+      if(
+        await removeHouse(this.data.objectId)
+      ){
+        this.$message.success('删除成功')
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-$color-light:#89c1c0;
+$color-light: #89c1c0;
 
 .comp-house-item {
   flex: 1 0;
@@ -86,10 +107,10 @@ $color-light:#89c1c0;
   &:not(:last-child) {
     margin-right: 16px;
   }
-  &.male .house-item-box{
+  &.male .house-item-box {
     background: #e3f3ff;
   }
-  &.female .house-item-box{
+  &.female .house-item-box {
     background: #ffedf0;
   }
 }
@@ -108,7 +129,7 @@ $color-light:#89c1c0;
     margin: 0;
     line-height: 20px;
   }
-  .nickname{
+  .nickname {
     text-overflow: ellipsis;
     max-width: 10em;
     display: inline-block;
@@ -139,7 +160,7 @@ $color-light:#89c1c0;
 }
 .title {
   margin-top: 12px;
-  min-height:55px;
+  min-height: 55px;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -156,26 +177,26 @@ $color-light:#89c1c0;
     margin-right: 8px;
   }
 }
-.footer{
+.footer {
   font-size: 12px;
   margin-top: 8px;
-  .location{
+  .location {
     color: $color-light;
   }
-  .iconfont{
+  .iconfont {
     font-size: 12px;
   }
 }
-.house-opt{
+.house-opt {
   a {
     margin-right: 8px;
-    color:#666;
+    color: #666;
     cursor: pointer;
-    &:hover{
-      color:#89c1c0;
+    &:hover {
+      color: #89c1c0;
     }
-    &.active{
-      color:#fb4b52;
+    &.active {
+      color: #fb4b52;
     }
   }
 }

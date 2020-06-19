@@ -46,7 +46,7 @@
       </div>
     </section>
     <section v-if="data.commentCount">
-      <h2>留言({{data.commentCount}})</h2>
+      <h2>留言({{comments.length}})</h2>
       <div>
         <div class="comment flex" v-for="item in comments" :key="item.objectId">
           <img class="head" :src="item.userAvatarUrl" v-preview/>
@@ -58,7 +58,13 @@
             <div class="comment-content">
               {{item.content}}
             </div>
-            <span class="align-right" v-if="item.quoteUserName">回复·{{item.quoteUserName}}</span>
+            <span class="flex_c_b">
+              <span>
+                <el-button type="text" @click="handleRemove(item)">删除</el-button>
+                <el-button v-if="item.avUserId!==state.me.id" type="text" @click="reply(item)">回复</el-button>
+              </span>
+              <span v-if="item.quoteUserName">回复·{{item.quoteUserName}}</span>
+            </span>
           </div>
         </div>
       </div>
@@ -66,7 +72,10 @@
     <section class="reply-area">
       <el-form size="small">
         <el-form-item>
-          <el-input type="textarea" placeholder="留言" v-model="form.content"/>
+          <span v-if="replyUser">回复：{{replyUser.quoteUserName}}
+            <el-button type="text" @click="replyUser = null"> <i class="el-icon-close"/></el-button>
+          </span>
+          <el-input type="textarea" :placeholder="replyUser?'回复':'留言'" v-model="form.content"/>
         </el-form-item>
         <el-form-item label="私密">
           <el-checkbox v-model="form.hidden"/>
@@ -80,7 +89,7 @@
 </template>
 
 <script>
-import { queryHouseById, listCommentByHouse,contactUser} from '../utils/leancloud'
+import { queryHouseById, listCommentByHouse,contactUser,addComment,removeComment } from '../utils/leancloud'
 import Img from './Img'
 
 const genderMap = {
@@ -106,7 +115,8 @@ export default {
       form:{
         content:'',
         hidden:false
-      }
+      },
+      replyUser:null
     }
   },
   filters:{
@@ -133,12 +143,47 @@ export default {
           this.contact = result
         })
       })
+      this.loadComments()
+    },
+    loadComments(){
       listCommentByHouse(this.oid).then(result=>{
         this.comments = result
       })
     },
-    handleSubmit(){
-      alert('todo')
+    // 添加评论
+    async handleSubmit(){
+      if(
+        await addComment({
+          content:this.form.content,
+          isPrivate:this.form.hidden,
+          houseId:this.oid,
+          houseUserId:this.data.avUserId,
+          ...this.replyUser||{}
+        })
+      ){
+        this.form.content = ''
+        this.replyUser = null
+        this.loadComments()
+      }
+    },
+    // 删除评论
+    async handleRemove(item){
+      if(
+        await removeComment({
+          commentId:item.objectId,
+          houseUserId:item.houseUserId,
+          avUserId:item.avUserId
+        })
+      ){
+        this.loadComments()
+      }
+    },
+    reply(item){
+      this.replyUser = {
+        quoteUser:item.avUserId,
+        quoteUserName:item.userNickName,
+        quoteContent:item.content,
+      }
     }
   }
 }
