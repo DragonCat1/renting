@@ -123,10 +123,18 @@ export default {
       }
       this.curPoint = new AMap.Marker({
         bubble:true,
+        draggable:true,
         map: this.map,
+        zIndex:200,
         position:this.contextMenuPositon, //基点位置
       })
-      this.$emit('location',this.contextMenuPositon)
+      this.curPoint.on('dragging',()=>{
+        this.drawCircle()
+      })
+      this.curPoint.on('dragend',()=>{
+        this.$emit('location',this.curPoint.getPosition())
+      })
+      this.$emit('location',this.curPoint.getPosition())
     },
     initDrag(reverse){
       const key = reverse ? 'removeEventListener' : 'addEventListener'
@@ -172,10 +180,11 @@ export default {
         const {latitude,longitude} = el.location
         const point = new AMap.Marker({
           bubble:true,
-          content:'<img width="19px" height="33px" src="//webapi.amap.com/theme/v1.3/markers/b/mark_rs.png">',
+          // content:'<img width="19px" height="33px" src="//webapi.amap.com/theme/v1.3/markers/b/mark_rs.png">',
+          content:`<img style="width:36px;height:36px;border-radius:50%;" src="${el.image}"/>`,
           map: this.map,
           position:[longitude,latitude],
-          label:{content:index+1,offset:new AMap.Pixel(2,38)},
+          // label:{content:index+1,offset:new AMap.Pixel(2,38)},
           title:el.title
         })
         this.pointMarks.push(point)
