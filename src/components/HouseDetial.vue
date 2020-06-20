@@ -263,7 +263,7 @@ $color-light: #89c1c0;
       border-radius: $size / 2;
     }
     &-content {
-      height: 26px;
+      min-height: 26px;
       margin: 4px 0;
     }
   }

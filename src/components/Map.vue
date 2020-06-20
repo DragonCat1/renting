@@ -186,7 +186,8 @@ export default {
           title:el.title
         })
         point.on('click',()=>{
-          this.$parent.$refs.HouseNode[index].itemClick()
+          const vnode = this.$parent.$refs.HouseNode.find(node => node.data.objectId === el.id)
+          vnode.itemClick()
         })
         this.pointMarks.push(point)
       })
