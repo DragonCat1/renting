@@ -143,9 +143,7 @@ export default {
     },
     initLayout(){
       const appEl = document.querySelector("#app")
-      if(window.innerHeight > appEl.offsetHeight){
-        this.height = this.height + window.innerHeight - appEl.offsetHeight
-      }
+      this.height = this.height + window.innerHeight - appEl.offsetHeight
     },
     drawCircle(fit){
       if(this.circle){
@@ -198,6 +196,14 @@ export default {
     this.initMap()
     this.initDrag()
     this.initLayout()
+  },
+  created(){
+    this.$store.subscribe(async(mutation)=>{
+      if(mutation.type==='m_set_houses'){
+        await this.$nextTick()
+        this.initLayout()
+      }
+    })
   },
   destroyed(){
     this.initDrag(true)

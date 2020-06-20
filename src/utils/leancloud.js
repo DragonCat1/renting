@@ -11,8 +11,12 @@ const {Query,User,Cloud} = AV
 const {appId,appKey} = config
 
 const querys = {
-  user: new Query('_user')
+  user: new Query('_user'),
+  house: new Query('House'),
+  contact: new Query('Contact')
 }
+window.querys = querys
+
 // 初始化
 function init(_appId=appId,_appKey=appKey) {
   AV.init({
@@ -44,17 +48,10 @@ async function reg({username = uuid().replace(/-/g,'').slice(0,25),password = '1
     star:'天蝎座',
     wechatNickName:'王总',
     wechatAvatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/sGsv1FlzMbshiblyEoCiaZiatvoK24hzic6QqYYGNic4GBIG3ojfdXcrGmgpFocHgV7BzkfQT2HOkOmEGoicN7MHYQtQ/0',
-    mobilePhoneNumber:'18764632356',
+    mobilePhoneNumber:'18764632358',
     mobilePhoneVerified:true,
     viewCount:0,
     gender:'女',
-    authData:{
-      lc_weapp: {
-        session_key: "HjkNFZkKrZTM4gIaBM5e+A==",
-        openid: "o9an54swIF5wAdXfR9AgMdaE5sbE",
-        unionid: "o9paK1fuN2NaXay2SZ4pjBioVIJM"
-      }
-    },
     lastLogin:'',
     hasNotified:false,
     views:[],
@@ -284,6 +281,18 @@ async function contactUser(houseUserId,houseCity,houseId){
   }
 }
 
+
+async function getUser(id){
+  try{
+    const result = await querys.user.get(id)
+    return result
+  }
+  catch(e){
+    handleError(e)
+    return false
+  }
+}
+
 /**
  * 留言
  * @param {*} content
@@ -381,5 +390,13 @@ export {
   contactUser,
   addComment,
   removeComment,
-  removeHouse
+  removeHouse,
+  querys,
+  getUser
 }
+
+
+User.currentAsync().then(user=>{
+  window.currentUser = user
+  user&&listHouse()
+})

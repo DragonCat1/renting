@@ -83,6 +83,7 @@ export default new Vuex.Store({
 
   },
   plugins: [createPersistedState({
-    key:'$store'
+    key:'$store',
+    paths:['isLogin','me','searchForm','filter','block','blacklist']
   })]
 })

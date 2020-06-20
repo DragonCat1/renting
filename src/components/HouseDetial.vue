@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { queryHouseById, listCommentByHouse,contactUser,addComment,removeComment } from '../utils/leancloud'
+import { queryHouseById, listCommentByHouse,contactUser,addComment,removeComment,getUser } from '../utils/leancloud'
 import Img from './Img'
 
 const genderMap = {
@@ -139,8 +139,11 @@ export default {
       queryHouseById(this.oid).then(result=>{
         this.data = result
         const {avUserId,city,objectId} = result
-        contactUser(avUserId,city,objectId).then(result=>{
-          this.contact = result
+        // contactUser(avUserId,city,objectId).then(result=>{
+        //   this.contact = result
+        // })
+        getUser(avUserId).then(user=>{
+          this.contact.phone = user.attributes.mobilePhoneNumber
         })
       })
       this.loadComments()
