@@ -13,7 +13,7 @@
     "electron-dev": "concurrently -n \"electron-main,electron-renderer,electron\" \"npm run electron-main-build\"\"npm run electron-renderer-build\" \"npm run electron\""
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "element-ui": "^2.5.2",
     "leancloud-realtime": "^4.2.1",
     "leancloud-storage": "^3.11.1",
